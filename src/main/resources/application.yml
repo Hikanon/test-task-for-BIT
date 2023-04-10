@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    username: root
+    password: 154263789
+    url: jdbc:postgresql://localhost:5432/test-task-for-BIT
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath*:database/createTables.sql
+#      data-locations: classpath*:database/insertData.sql
+
+server:
+  port: 8080
+
