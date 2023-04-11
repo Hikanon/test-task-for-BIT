@@ -11,4 +11,6 @@ public interface HouseRepository extends JpaRepository<House, Integer> {
     Integer countHousesByStreetId(Integer streetId);
 
     List<House> findHousesByStreetId(Integer streetId);
+
+    List<House> findByStreet_CityNameAndStreet_NameAndNumber(String cityName, String streetName, String number);
 }

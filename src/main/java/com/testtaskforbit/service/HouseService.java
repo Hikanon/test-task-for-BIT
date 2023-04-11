@@ -16,6 +16,8 @@ public interface HouseService {
 
     List<House> readAllByStreet(Street street);
 
+    List<House> readAllByCityNameAndStreetNameAndHomeNum(String cityName, String streetName, String number);
+
     House read(int id);
 
     boolean update(House house, int id);

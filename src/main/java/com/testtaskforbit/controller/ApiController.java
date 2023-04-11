@@ -23,9 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("")
 public class ApiController {
-
 
     private final CityService cityService;
     private final StreetService streetService;

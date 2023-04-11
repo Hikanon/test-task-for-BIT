@@ -30,9 +30,16 @@ public class HouseServiceImpl implements HouseService {
         return houseRepository.findAll();
     }
 
+
+
     @Override
     public List<House> readAllByStreet(Street street) {
         return houseRepository.findHousesByStreetId(street.getId());
+    }
+
+    @Override
+    public List<House> readAllByCityNameAndStreetNameAndHomeNum(String cityName, String streetName, String number) {
+        return houseRepository.findByStreet_CityNameAndStreet_NameAndNumber(cityName, streetName, number);
     }
 
     @Override
