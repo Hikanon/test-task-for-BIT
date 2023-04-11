@@ -2,19 +2,19 @@ package com.testtaskforbit.service.impl;
 
 import com.testtaskforbit.entity.City;
 import com.testtaskforbit.repository.CitiesRepository;
-import com.testtaskforbit.service.CitiesService;
+import com.testtaskforbit.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CitiesServiceImpl implements CitiesService {
+public class CityServiceImpl implements CityService {
 
     private final CitiesRepository citiesRepository;
 
     @Autowired
-    public CitiesServiceImpl(CitiesRepository citiesRepository) {
+    public CityServiceImpl(CitiesRepository citiesRepository) {
         this.citiesRepository = citiesRepository;
     }
 
@@ -34,10 +34,10 @@ public class CitiesServiceImpl implements CitiesService {
     }
 
     @Override
-    public boolean update(City client, int id) {
+    public boolean update(City city, int id) {
         if (citiesRepository.existsById(id)) {
-            client.setId(id);
-            citiesRepository.save(client);
+            city.setId(id);
+            citiesRepository.save(city);
             return true;
         }
         return false;
