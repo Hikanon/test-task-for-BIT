@@ -30,7 +30,7 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public City read(int id) {
-        return citiesRepository.getReferenceById(id);
+        return citiesRepository.findById(id).get();
     }
 
     @Override

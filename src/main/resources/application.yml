@@ -1,8 +1,8 @@
 spring:
   datasource:
-    username: root
-    password: 154263789
-    url: jdbc:postgresql://localhost:5432/test-task-for-BIT
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
     driver-class-name: org.postgresql.Driver
   jpa:
     database: postgresql
@@ -10,8 +10,8 @@ spring:
   sql:
     init:
       mode: always
-      schema-locations: classpath*:database/springBootPart/createTables.sql
-#      data-locations: classpath*:database/springBootPart/insertData.sql
+      schema-locations: classpath*:database/createTables.sql
+#      data-locations: classpath*:database/insertData.sql
 
 server:
   port: 8080

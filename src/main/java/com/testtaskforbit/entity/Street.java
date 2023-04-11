@@ -35,4 +35,13 @@ public class Street {
     public int hashCode() {
         return Objects.hash(id, name, city);
     }
+
+    @Override
+    public String toString() {
+        return "Street{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", city=" + city +
+                '}';
+    }
 }

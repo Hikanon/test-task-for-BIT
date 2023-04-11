@@ -36,4 +36,13 @@ public class House {
     public int hashCode() {
         return Objects.hash(id, number, street);
     }
+
+    @Override
+    public String toString() {
+        return "House{" +
+                "id=" + id +
+                ", number='" + number + '\'' +
+                ", street=" + street +
+                '}';
+    }
 }

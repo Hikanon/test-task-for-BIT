@@ -2,6 +2,8 @@ package com.testtaskforbit.controller;
 
 
 import com.testtaskforbit.dto.CitiesNumOfHouses;
+import com.testtaskforbit.dto.HousesByCity;
+import com.testtaskforbit.dto.HousesByStreet;
 import com.testtaskforbit.dto.StreetsNumOfHouses;
 import com.testtaskforbit.entity.City;
 import com.testtaskforbit.entity.House;
@@ -24,6 +26,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class ApiController {
 
+
     private final CityService cityService;
     private final StreetService streetService;
     private final HouseService houseService;
@@ -40,8 +43,9 @@ public class ApiController {
         final List<City> cities = cityService.readAll();
         final List<CitiesNumOfHouses> result = new ArrayList<>();
         cities.forEach(city -> {
-            List<Street> streets = streetService.readByCity(city);
-            int sumOfHousesOnStreet = streets.stream().mapToInt(street -> houseService.countHousesByStreetId(street.getId())).sum();
+            int sumOfHousesOnStreet = streetService.readByCity(city).stream()
+                    .mapToInt(houseService::countHousesByStreet)
+                    .sum();
             result.add(new CitiesNumOfHouses(city, sumOfHousesOnStreet));
         });
         return !result.isEmpty()
@@ -50,24 +54,37 @@ public class ApiController {
     }
 
     @GetMapping("/streets")
-    public ResponseEntity<List<StreetsNumOfHouses>> getNumOfHousesInStreetByCityId(@RequestParam(value = "city_id", required = false)
+    public ResponseEntity<List<StreetsNumOfHouses>> getNumOfHousesInStreetByCityId(@RequestParam(value = "city_id", required = false, defaultValue = "1")
                                                                                    Integer cityId) {
-        List<Street> street = streetService.readByCity(cityService.read(cityId));
+        List<Street> streets = streetService.readByCity(cityService.read(cityId));
         List<StreetsNumOfHouses> result = new ArrayList<>();
-        for (Street s : street) {
-            result.add(new StreetsNumOfHouses(s.getId(), houseService.countHousesByStreetId(s.getId())));
-        }
+        streets.forEach(street -> result.add(new StreetsNumOfHouses(street.getId(), houseService.countHousesByStreet(street))));
         return !result.isEmpty()
                 ? new ResponseEntity<>(result, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/houses")
-    public ResponseEntity<List<House>> allHouses() {
-        final List<House> houses = houseService.readAll();
-        return !houses.isEmpty()
-                ? new ResponseEntity<>(houses, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> allHouses(@RequestParam(value = "city_id", required = false) Integer cityId,
+                                       @RequestParam(value = "street_id", required = false) Integer streetId) {
+        if (cityId == null) {
+            List<House> houseList = houseService.readAllByStreet(streetService.read(streetId));
+            HousesByStreet housesByStreet = new HousesByStreet(houseList, streetService.read(streetId));
+            return housesByStreet.getHouses() != null && housesByStreet.getHouses().size() > 0
+                    ? new ResponseEntity<>(housesByStreet, HttpStatus.OK)
+                    : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            List<House> houses = new ArrayList<>();
+            streetService.readByCity(cityService.read(cityId))
+                    .stream()
+                    .flatMap(street -> houseService.readAllByStreet(street).stream())
+                    .forEach(houses::add);
+            HousesByCity housesByCity = new HousesByCity(houses, cityService.read(cityId));
+            return housesByCity.getHouses() != null && housesByCity.getHouses().size() > 0
+                    ? new ResponseEntity<>(housesByCity, HttpStatus.OK)
+                    : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        }
     }
 
 }

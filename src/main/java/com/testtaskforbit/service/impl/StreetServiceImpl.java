@@ -36,7 +36,7 @@ public class StreetServiceImpl implements StreetService {
 
     @Override
     public Street read(int id) {
-        return streetRepository.getReferenceById(id);
+        return streetRepository.findById(id).get();
     }
 
     @Override

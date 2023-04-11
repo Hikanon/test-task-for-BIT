@@ -1,6 +1,8 @@
 package com.testtaskforbit.service.impl;
 
+import com.testtaskforbit.entity.City;
 import com.testtaskforbit.entity.House;
+import com.testtaskforbit.entity.Street;
 import com.testtaskforbit.repository.HouseRepository;
 import com.testtaskforbit.service.HouseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,8 +31,13 @@ public class HouseServiceImpl implements HouseService {
     }
 
     @Override
+    public List<House> readAllByStreet(Street street) {
+        return houseRepository.findHousesByStreetId(street.getId());
+    }
+
+    @Override
     public House read(int id) {
-        return houseRepository.getReferenceById(id);
+        return houseRepository.findById(id).get();
     }
 
     @Override
@@ -53,7 +60,12 @@ public class HouseServiceImpl implements HouseService {
     }
 
     @Override
-    public Integer countHousesByStreetId(Integer streetId) {
-        return houseRepository.countHousesByStreetId(streetId);
+    public Integer countHousesByStreet(Street street) {
+        return houseRepository.countHousesByStreetId(street.getId());
+    }
+
+    @Override
+    public List<House> readAllByCity(City city) {
+        return null;
     }
 }

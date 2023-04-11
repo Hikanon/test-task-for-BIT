@@ -1,10 +1,10 @@
-INSERT INTO cities(name) VALUES 
+INSERT INTO cities(name) VALUES
 	('Москва'),
 	('Санкт-Петербург'),
 	('Ярославль'),
 	('Нижний Новгород'),
 	('Краснодар');
-	
+
 INSERT INTO streets(name, city_id) VALUES 
 	('Ленинский проспект', 1),
 	('Невский проспект', 2),
