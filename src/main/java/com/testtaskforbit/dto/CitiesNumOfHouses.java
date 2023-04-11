@@ -1,5 +1,6 @@
 package com.testtaskforbit.dto;
 
+import com.testtaskforbit.entity.City;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,11 +8,11 @@ import lombok.Setter;
 @Setter
 public class CitiesNumOfHouses {
 
-    private String cityName;
+    private City city;
     private int numOfHouses;
 
-    public CitiesNumOfHouses(String cityName, int numOfHouses) {
-        this.cityName = cityName;
+    public CitiesNumOfHouses(City city, int numOfHouses) {
+        this.city = city;
         this.numOfHouses = numOfHouses;
     }
 
