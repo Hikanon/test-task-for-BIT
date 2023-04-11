@@ -11,6 +11,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "cities", schema = "public", catalog = "test-task-for-BIT")
 public class City {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")

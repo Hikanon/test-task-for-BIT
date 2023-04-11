@@ -18,19 +18,21 @@ public class Apartment {
     private int id;
     @Column(name = "area")
     private BigDecimal area;
-    @Column(name = "house_id")
-    private int houseId;
+
+    @ManyToOne
+    @JoinColumn(name = "house_id")
+    private House house;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Apartment that = (Apartment) o;
-        return id == that.id && houseId == that.houseId && Objects.equals(area, that.area);
+        Apartment apartment = (Apartment) o;
+        return id == apartment.id && Objects.equals(area, apartment.area) && Objects.equals(house, apartment.house);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, area, houseId);
+        return Objects.hash(id, area, house);
     }
 }

@@ -11,25 +11,28 @@ import java.util.Objects;
 @Entity
 @Table(name = "streets", schema = "public", catalog = "test-task-for-BIT")
 public class Street {
+
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
     private int id;
     @Column(name = "name")
     private String name;
-    @Column(name = "city_id")
-    private int cityId;
+
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City city;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Street that = (Street) o;
-        return id == that.id && cityId == that.cityId && Objects.equals(name, that.name);
+        Street street = (Street) o;
+        return id == street.id && Objects.equals(name, street.name) && Objects.equals(city, street.city);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, cityId);
+        return Objects.hash(id, name, city);
     }
 }
