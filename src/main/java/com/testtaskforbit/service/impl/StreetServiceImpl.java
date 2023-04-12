@@ -1,6 +1,5 @@
 package com.testtaskforbit.service.impl;
 
-import com.testtaskforbit.entity.City;
 import com.testtaskforbit.entity.Street;
 import com.testtaskforbit.repository.StreetRepository;
 import com.testtaskforbit.service.StreetService;
@@ -25,36 +24,12 @@ public class StreetServiceImpl implements StreetService {
     }
 
     @Override
-    public List<Street> readAll() {
-        return streetRepository.findAll();
+    public List<Street> readByCityId(Integer cityId) {
+        return streetRepository.findStreetsByCityId(cityId);
     }
 
     @Override
-    public List<Street> readByCity(City city) {
-        return streetRepository.findStreetsByCityId(city.getId());
-    }
-
-    @Override
-    public Street read(int id) {
-        return streetRepository.findById(id).get();
-    }
-
-    @Override
-    public boolean update(Street street, int id) {
-        if (streetRepository.existsById(id)) {
-            street.setId(id);
-            streetRepository.save(street);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean delete(int id) {
-        if (streetRepository.existsById(id)) {
-            streetRepository.deleteById(id);
-            return true;
-        }
-        return false;
+    public Integer readCountHosesByStreetId(Integer streetId) {
+        return streetRepository.countHousesByStreetId(streetId);
     }
 }

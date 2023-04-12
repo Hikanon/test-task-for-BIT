@@ -1,8 +1,7 @@
 package com.testtaskforbit.service;
 
-import com.testtaskforbit.entity.City;
+import com.testtaskforbit.dto.ApartmentsInHouse;
 import com.testtaskforbit.entity.House;
-import com.testtaskforbit.entity.Street;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,19 +11,10 @@ public interface HouseService {
 
     void create(House house);
 
-    List<House> readAll();
+    List<House> readAllByStreetId(Integer streetId);
 
-    List<House> readAllByStreet(Street street);
+    List<House> readAllByCityId(Integer cityId);
 
-    List<House> readAllByCityNameAndStreetNameAndHomeNum(String cityName, String streetName, String number);
+    List<ApartmentsInHouse> readAddressAndNumOfHouses(List<House> houses);
 
-    House read(int id);
-
-    boolean update(House house, int id);
-
-    boolean delete(int id);
-
-    Integer countHousesByStreet(Street street);
-
-    List<House> readAllByCity(City city);
 }

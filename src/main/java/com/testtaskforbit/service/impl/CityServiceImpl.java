@@ -24,31 +24,13 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
+    public Integer countHouses(City city) {
+        return citiesRepository.countHousesByCityId(city.getId());
+    }
+
+    @Override
     public List<City> readAll() {
         return citiesRepository.findAll();
     }
 
-    @Override
-    public City read(int id) {
-        return citiesRepository.findById(id).get();
-    }
-
-    @Override
-    public boolean update(City city, int id) {
-        if (citiesRepository.existsById(id)) {
-            city.setId(id);
-            citiesRepository.save(city);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean delete(int id) {
-        if (citiesRepository.existsById(id)) {
-            citiesRepository.deleteById(id);
-            return true;
-        }
-        return false;
-    }
 }
