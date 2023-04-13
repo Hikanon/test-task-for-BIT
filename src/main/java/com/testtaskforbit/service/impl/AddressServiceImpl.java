@@ -34,13 +34,13 @@ public class AddressServiceImpl implements AddressService {
         String city = null, street = null, number = null;
         for (int i = 0; i < parts.length; i++) {
             parts[i] = parts[i].trim();
-            if (parts[i].startsWith("г")) {
+            if (parts[i].startsWith("г") || parts[i].contains("город")) {
                 city = parts[i].split(" ")[1];
             }
-            if (parts[i].startsWith("ул")) {
-                street = parts[i].split(" ")[1];
+            if (parts[i].contains("улица") || parts[i].contains("проспект")) {
+                street = parts[i];
             }
-            if (parts[i].startsWith("д")) {
+            if (parts[i].startsWith("д") || parts[i].contains("дом")) {
                 number = parts[i].split(" ")[1];
             }
         }
